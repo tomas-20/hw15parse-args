@@ -14,7 +14,7 @@ int get_word_count(char *string) {
     while (wordy(*string)) {
       string ++;
     }
-    if (*string) {
+    while (*string == ' ') {
       string ++;
     }
   }
