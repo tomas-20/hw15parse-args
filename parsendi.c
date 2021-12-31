@@ -8,13 +8,13 @@ int wordy(char c) {
 int get_word_count(char *string) {
   int word_count = 0;
   while (*string) {
-    if (wordy(*string)) {
+    while (*string == ' ') {
+      string ++;
+    }
+    if (*string) {
       word_count ++;
     }
     while (wordy(*string)) {
-      string ++;
-    }
-    while (*string == ' ') {
       string ++;
     }
   }
@@ -45,17 +45,21 @@ char *get_copy(char *string) {
 char **parse_args(char *string) {
   int word_count = get_word_count(string);
   char **words = malloc(sizeof (char *[word_count + 1]));
-  for (int i = 0; i < word_count; i ++) {
+  char **words_copy = words;
+  while (*string) {
     while (*string == ' ') {
       string ++;
     }
-    words[i] = get_copy(string);
+    if (*string) {
+      *words = get_copy(string);
+      words ++;
+    }
     while (wordy(*string)) {
       string ++;
     }
   }
-  words[word_count] = NULL;
-  return words;
+  *words = NULL;
+  return words_copy;
 }
 
 int main() {
